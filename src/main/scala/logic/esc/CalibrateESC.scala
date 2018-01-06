@@ -1,4 +1,4 @@
-package com.artenc.robotics.logic.esc
+package com.artenc.robotic.logic.esc
 
 import com.artenc.robotic.drivers.MotorController
 import com.artenc.robotic.drivers.SwitchController
@@ -18,6 +18,12 @@ class CalibrateESC private(motorControllers: Array[MotorController], motorSwitch
         this(Array(motorController), switchOnDelayMs)
     }
 
+    private var highReadyCallback : () => Unit = null
+
+    def setHighReadyCallback(highReadyCallback: () => Unit) {
+        this.highReadyCallback = highReadyCallback
+    }
+
     def calibrate() {
         val switchInitialState = if (this.motorSwitch != null) this.motorSwitch.getCurrentState() else false
 
@@ -26,13 +32,16 @@ class CalibrateESC private(motorControllers: Array[MotorController], motorSwitch
 
         setMotorsThrottle(1)
 
+        if (this.highReadyCallback != null)
+            this.highReadyCallback()
+
         if (this.switchOnDelayMs > 0)
             Thread.sleep(this.switchOnDelayMs)
 
         setMotorsSwitch(true)
         setMotorsThrottle(0)
 
-        if (!switchInitialState)
+        if (!switchInitialState && this.motorSwitch != null)
             this.motorSwitch.off()
     }
 

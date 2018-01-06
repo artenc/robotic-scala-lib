@@ -50,12 +50,13 @@ class PWMAdafruitPCA9685(pwmFreq: Int, i2c: I2CController) extends DriverBase
     }
 
     def setChannelPWM(channel: Short, on: Int, off: Int) {
-        val buffer = Array[Byte](5)
-    	buffer(0) = (LED_ON_L + 4 * channel).toByte
-    	buffer(1) = on.toByte
-    	buffer(2) = (on >>> 8).toByte
-    	buffer(3) = off.toByte
-    	buffer(4) = (off >>> 8).toByte
+        val buffer = Array[Byte](
+            (LED_ON_L + 4 * channel).toByte,
+            on.toByte,
+            (on >>> 8).toByte,
+            off.toByte,
+            (off >>> 8).toByte
+        )
 
     	this.i2c.write(DEVICE_ADDR, buffer)
     }
