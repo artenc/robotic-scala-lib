@@ -27,7 +27,7 @@ abstract class AccelerometerSensor extends DriverBase with SensorTrait
         getOrientation(getX(), getY(), getZ())
     }
 
-    private def getOrientation(accelX: Float, accelY: Float, accelZ: Float) : Orientation = {
+    def getOrientation(accelX: Float, accelY: Float, accelZ: Float) : Orientation = {
         val signOfZ : Float = if (accelZ >= 0) 1.0f else -1.0f
 
         val t_roll : Float = accelX * accelX + accelZ * accelZ

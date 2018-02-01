@@ -15,7 +15,7 @@ class I2CControllerRasPi extends I2CController
 
     override protected def init() {
         PlatformManager.setPlatform(Platform.RASPBERRYPI)
-        this.i2c = I2CFactory.getInstance(I2CBus.BUS_2);
+        this.i2c = I2CFactory.getInstance(I2CBus.BUS_1);
     }
 
     private def getDevice(addr: Int) : I2CDevice = {
@@ -34,7 +34,7 @@ class I2CControllerRasPi extends I2CController
         getDevice(addr).write(buffer)
     }
     override def write(addr: Int, key: Int, b: Byte) {
-        getDevice(addr).write(key, b)
+        getDevice(addr).write(key.toByte, b)
     }
     override def write(addr: Int, key: Int, buffer: Array[Byte], offset: Int, size: Int) {
         getDevice(addr).write(key, buffer, offset, size)
