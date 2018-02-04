@@ -9,7 +9,7 @@ class VoltageSensorMock extends VoltageSensor
     private var currentVoltage: Float = 12.4f
 
     override protected def init() {}
-    override def processDriver() {
+    override protected def process() {
         this.currentVoltage += VOLTAGE_CHANGE
     }
 

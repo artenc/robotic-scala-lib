@@ -5,7 +5,7 @@ import com.artenc.robotic.drivers.AccelerometerSensor
 class AccelerometerSensorMock extends AccelerometerSensor
 {
     override protected def init() {}
-    override def processDriver() {}
+    override protected def process() {}
 
     override def getRawX() : Float = {
         0
