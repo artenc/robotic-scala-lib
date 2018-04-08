@@ -38,11 +38,11 @@ class PWMAdafruitPCA9685(pwmFreq: Int, i2c: I2CController) extends DriverBase
 
     	this.i2c.write(DEVICE_ADDR, MODE1.toByte)
     	val oldMode : Byte = this.i2c.read(DEVICE_ADDR)
-    	val newMode : Byte = ((oldMode & 0x7F) | 0x10).toByte;
+    	val newMode : Byte = ((oldMode & 0x7F) | 0x10).toByte
 
     	this.i2c.write(DEVICE_ADDR, MODE1, newMode) // go to sleep
-    	this.i2c.write(DEVICE_ADDR, PRESCALE, prescale); // set the prescaler
-    	this.i2c.write(DEVICE_ADDR, MODE1, oldMode);
+    	this.i2c.write(DEVICE_ADDR, PRESCALE, prescale) // set the prescaler
+    	this.i2c.write(DEVICE_ADDR, MODE1, oldMode)
 
         Thread.sleep(5)
 
@@ -53,9 +53,9 @@ class PWMAdafruitPCA9685(pwmFreq: Int, i2c: I2CController) extends DriverBase
         val buffer = Array[Byte](
             (LED_ON_L + 4 * channel).toByte,
             on.toByte,
-            (on >>> 8).toByte,
+            (on >> 8).toByte,
             off.toByte,
-            (off >>> 8).toByte
+            (off >> 8).toByte
         )
 
     	this.i2c.write(DEVICE_ADDR, buffer)

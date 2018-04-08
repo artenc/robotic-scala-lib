@@ -15,7 +15,7 @@ abstract class PWMController extends DriverBase
             throw new Exception("Percent can be between 0 and 1")
 
         setPWM(
-            this.pulseMin,
+            0,
             this.pulseMin + (this.pulseRange * percent).toInt
         )
     }
